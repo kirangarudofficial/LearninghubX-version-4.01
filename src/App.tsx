@@ -32,6 +32,7 @@ import GDPRSettings from './components/GDPRSettings';
 import AdminAuditLog from './components/AdminAuditLog';
 import NotFound from './components/NotFound';
 import { storage } from './utils/storage';
+import { StudentDashboard, InstructorDashboard, AdminDashboard } from './components/dashboards';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -128,6 +129,12 @@ function App() {
         return <GDPRSettings />;
       case 'audit-log':
         return userRole === 'admin' ? <AdminAuditLog /> : <div className="min-h-screen flex items-center justify-center"><p>Admin access required</p></div>;
+      case 'student-dashboard':
+        return isLoggedIn && userRole === 'student' ? <StudentDashboard /> : <div className="min-h-screen flex items-center justify-center"><p className="text-gray-900 dark:text-white">Student access required</p></div>;
+      case 'instructor-dashboard':
+        return isLoggedIn && userRole === 'instructor' ? <InstructorDashboard /> : <div className="min-h-screen flex items-center justify-center"><p className="text-gray-900 dark:text-white">Instructor access required</p></div>;
+      case 'admin-dashboard':
+        return isLoggedIn && userRole === 'admin' ? <AdminDashboard /> : <div className="min-h-screen flex items-center justify-center"><p className="text-gray-900 dark:text-white">Admin access required</p></div>;
       default:
         return (
           <>
@@ -177,6 +184,9 @@ function App() {
             <Route path="/notifications" element={isLoggedIn ? <NotificationsPage /> : <div className="min-h-screen flex items-center justify-center"><p className="text-gray-900 dark:text-white">Please login to view notifications</p></div>} />
             <Route path="/privacy" element={<GDPRSettings />} />
             <Route path="/audit-log" element={userRole === 'admin' ? <AdminAuditLog /> : <div className="min-h-screen flex items-center justify-center"><p className="text-gray-900 dark:text-white">Admin access required</p></div>} />
+            <Route path="/student-dashboard" element={isLoggedIn && userRole === 'student' ? <StudentDashboard /> : <div className="min-h-screen flex items-center justify-center"><p className="text-gray-900 dark:text-white">Student access required</p></div>} />
+            <Route path="/instructor-dashboard" element={isLoggedIn && userRole === 'instructor' ? <InstructorDashboard /> : <div className="min-h-screen flex items-center justify-center"><p className="text-gray-900 dark:text-white">Instructor access required</p></div>} />
+            <Route path="/admin-dashboard" element={isLoggedIn && userRole === 'admin' ? <AdminDashboard /> : <div className="min-h-screen flex items-center justify-center"><p className="text-gray-900 dark:text-white">Admin access required</p></div>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           

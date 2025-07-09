@@ -38,8 +38,13 @@ const Navbar = ({
     { id: 'forum', label: 'Community' },
     ...(isLoggedIn ? [
       { id: 'progress', label: 'My Learning' },
+      ...(userRole === 'student' ? [{ id: 'student-dashboard', label: 'Dashboard' }] : []),
+      ...(userRole === 'instructor' ? [{ id: 'instructor-dashboard', label: 'Dashboard' }] : []),
       ...(userRole === 'instructor' ? [{ id: 'teach', label: 'Teach' }] : []),
-      ...(userRole === 'admin' ? [{ id: 'admin', label: 'Admin' }] : [])
+      ...(userRole === 'admin' ? [
+        { id: 'admin', label: 'Admin' },
+        { id: 'admin-dashboard', label: 'Admin Dashboard' }
+      ] : [])
     ] : [])
   ];
 
